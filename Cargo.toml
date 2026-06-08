@@ -1,0 +1,16 @@
+[package]
+name = "Windmill_7_6_2026"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+sdl2 = { version = "0.38", features = ["ttf"] }
+rand = "0.8" # << Asegúrate de que esto esté aquí escrito y guardado
+
+[[bin]]
+name = "p1"
+path = "src/p1.rs"
+
+[[bin]]
+name = "sdl2_context"
+path = "src/sdl2_context.rs"
