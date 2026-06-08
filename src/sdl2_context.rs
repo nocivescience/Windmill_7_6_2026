@@ -24,8 +24,20 @@ impl Windmill {
     }
 }
 
+const WIDTH: u32 = 800;
+const HEIGHT: u32 = 600;
 fn main() -> Result<(), String> {
     let sdl_context = sdl2::init()?;
+    let video_subsystem = sdl_context.video()?;
+    let ttf_context =sdl2::ttf::init().map_err(|e| e.to_string())?;
+    let window = video_subsystem
+        .window("Ventana de prueba", WIDTH, HEIGHT)
+        .position_centered()
+        .build()
+        .map_err(|e| e.to_string())?;
+    let mut canvas = window.into_canvas()
+        .build()
+        .map_err(|e| e.to_string())?;
     print!("SDL2 initialized successfully!");
     let mi_molino = Windmill {
         pivot: (0.0, 0.0),
@@ -37,5 +49,11 @@ fn main() -> Result<(), String> {
     println!("Created windmill: {:?}", mi_molino);
     println!("Molino ordenado: \n{:#?}", mi_molino);
     print!("Molino nuevo: \n{:#?}", mi_molino_nuevo);
+    'running: loop {
+        canvas.set_draw_color(Color::RGB(0, 0, 0));
+        canvas.clear();
+    }
+    canvas.present();
+    std::thread::sleep(Duration::from_millis(16)); // Espera para ver la ventana antes de cerrarla
     Ok(())
 }
