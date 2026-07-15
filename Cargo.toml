@@ -14,3 +14,15 @@ path = "src/p1.rs"
 [[bin]]
 name = "sdl2_context"
 path = "src/sdl2_context.rs"
+
+[[bin]]
+name = "main"
+path = "src/main.rs"
+
+[[bin]]
+name = "p2"
+path = "src/p2.rs"
+
+[[bin]]
+name = "rect_rojo"
+path = "src/rect_rojo.rs"

@@ -1,55 +1,47 @@
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
 use sdl2::pixels::Color;
+use sdl2::rect::Rect;
 use std::time::Duration;
 
-// Configuración de la pantalla
 const WIDTH: u32 = 800;
 const HEIGHT: u32 = 600;
 
 fn main() -> Result<(), String> {
     let sdl_context = sdl2::init()?;
     let video_subsystem = sdl_context.video()?;
-    
-    // El EventPump es crucial para capturar teclado, ratón y cierres de ventana
     let mut event_pump = sdl_context.event_pump()?;
-
     let window = video_subsystem
-        .window("Ventana de prueba", WIDTH, HEIGHT)
+        .window("Ventana emergente", WIDTH, HEIGHT)
         .position_centered()
         .build()
         .map_err(|e| e.to_string())?;
-
-    let mut canvas = window.into_canvas()
+    let mut canvas = window
+        .into_canvas()
         .build()
         .map_err(|e| e.to_string())?;
-
     'running: loop {
-        // 1. Manejo de Eventos
         for event in event_pump.poll_iter() {
             match event {
-                // Si cierran la ventana (clic en la X)
-                Event::Quit { .. } => {
+                Event::Quit { .. } =>{
                     break 'running;
                 }
-                // Si se presiona una tecla
-                Event::KeyDown { keycode: Some(Keycode::Space), .. } => {
-                    break 'running; // Rompe el loop si es Espacio
+                Event::KeyDown { keycode: Some(Keycode::Space), .. } =>{
+                    break 'running;
+                }
+                Event::KeyDown { keycode: Some(Keycode::A), .. } =>{
+                    let rect = Rect::new(100, 100, 200, 150);
+                    canvas.set_draw_color(Color::RGB(255, 0, 0));
+                    canvas.fill_rect(rect)?;
+                    println!("Dibujé un rectángulo rojo en la pantalla");
                 }
                 _ => {}
             }
         }
-
-        // 2. Renderizado
         canvas.set_draw_color(Color::RGB(0, 0, 0));
         canvas.clear();
-        
-        // Mover el canvas.present() DENTRO del loop para que se actualice la pantalla constantemente
         canvas.present();
-
-        // Evita que el procesador vaya al 100% de uso (aprox. 60 FPS)
         std::thread::sleep(Duration::from_millis(16));
     }
-
     Ok(())
 }
