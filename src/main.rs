@@ -118,7 +118,9 @@ fn main() -> Result<(), String> {
                 | Event::KeyDown {
                     keycode: Some(Keycode::Escape),
                     ..
-                } => break 'running,
+                }| Event::KeyDown{keycode: Some(Keycode::U), .. }
+                | Event::KeyDown{keycode: Some(Keycode::P), .. }
+                 => break 'running,
                 _ => {}
             }
         }

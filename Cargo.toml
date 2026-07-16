@@ -24,5 +24,9 @@ name = "p2"
 path = "src/p2.rs"
 
 [[bin]]
+name = "creando_windmill"
+path = "src/creando_windmill.rs"
+
+[[bin]]
 name = "rect_rojo"
 path = "src/rect_rojo.rs"

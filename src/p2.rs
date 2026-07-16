@@ -23,18 +23,13 @@ fn main() -> Result<(), String> {
     'running: loop {
         for event in event_pump.poll_iter() {
             match event {
-                Event::Quit { .. } =>{
+                Event::Quit{ .. }
+                | Event::KeyDown { keycode: Some(Keycode::Escape), .. } => {
                     break 'running;
-                }
-                Event::KeyDown { keycode: Some(Keycode::Space), .. } =>{
-                    break 'running;
-                }
-                Event::KeyDown { keycode: Some(Keycode::A), .. } =>{
-                    let rect = Rect::new(100, 100, 200, 150);
-                    canvas.set_draw_color(Color::RGB(255, 0, 0));
-                    canvas.fill_rect(rect)?;
-                    println!("Dibujé un rectángulo rojo en la pantalla");
-                }
+                }Event::KeyDown {
+                    keycode: Some(Keycode::Escape),
+                    ..
+                } => break 'running,
                 _ => {}
             }
         }
