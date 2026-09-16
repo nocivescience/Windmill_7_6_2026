@@ -30,3 +30,7 @@ path = "src/creando_windmill.rs"
 [[bin]]
 name = "rect_rojo"
 path = "src/rect_rojo.rs"
+
+[[bin]]
+name = "crear_windmill"
+path = "src/crear_windmill.rs"

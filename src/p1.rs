@@ -7,7 +7,18 @@ use std::time::Duration;
 const WIDTH: u32 = 800;
 const HEIGHT: u32 = 600;
 
+struct Windmill {
+    pivot: (f32, f32),
+    angle: f32,
+    speed: f32,
+    length: f32,
+}
+
+
+
 fn main() -> Result<(), String> {
+    let start = (WIDTH as i32 / 2, HEIGHT as i32 / 2);
+    let end = (WIDTH as i32 / 2, HEIGHT as i32 / 2 - 100);
     let sdl_context = sdl2::init()?;
     let video_subsystem = sdl_context.video()?;
     
@@ -24,6 +35,13 @@ fn main() -> Result<(), String> {
         .build()
         .map_err(|e| e.to_string())?;
 
+    let mut windmill = Windmill {
+        pivot: (WIDTH as f32 / 2.0, HEIGHT as f32 / 2.0),
+        angle: 0.0,
+        speed: 1.0,
+        length: 100.0,
+    };
+
     'running: loop {
         // 1. Manejo de Eventos
         for event in event_pump.poll_iter() {
@@ -39,6 +57,11 @@ fn main() -> Result<(), String> {
                 _ => {}
             }
         }
+
+        
+
+        canvas.set_draw_color(Color::RGB(255, 255, 255));
+        canvas.draw_line(start, end);
 
         // 2. Renderizado
         canvas.set_draw_color(Color::RGB(0, 0, 0));
